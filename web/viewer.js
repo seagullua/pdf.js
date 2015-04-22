@@ -93,7 +93,6 @@ var mozL10n = document.mozL10n || document.webL10n;
 //#include pdf_viewer.js
 //#include pdf_thumbnail_viewer.js
 //#include pdf_outline_view.js
-//#include pdf_attachment_view.js
 
 var PDFViewerApplication = {
   initialBookmark: document.location.hash.substring(1),
@@ -933,24 +932,6 @@ var PDFViewerApplication = {
           self.switchSidebarView('outline', true);
         }
       });
-      pdfDocument.getAttachments().then(function(attachments) {
-        var container = document.getElementById('attachmentsView');
-        self.attachments = new PDFAttachmentView({
-          container: container,
-          attachments: attachments,
-          downloadManager: new DownloadManager()
-        });
-        self.attachments.render();
-        document.getElementById('viewAttachments').disabled = !attachments;
-
-        if (!attachments && !container.classList.contains('hidden')) {
-          self.switchSidebarView('thumbs');
-        }
-        if (attachments &&
-            self.preferenceSidebarViewOnLoad === SidebarView.ATTACHMENTS) {
-          self.switchSidebarView('attachments', true);
-        }
-      });
     });
 
     if (self.preferenceSidebarViewOnLoad === SidebarView.THUMBS) {
@@ -1127,8 +1108,7 @@ var PDFViewerApplication = {
         this.page = pageNumber; // simple page
       }
       if ('pagemode' in params) {
-        if (params.pagemode === 'thumbs' || params.pagemode === 'bookmarks' ||
-            params.pagemode === 'attachments') {
+        if (params.pagemode === 'thumbs' || params.pagemode === 'bookmarks') {
           this.switchSidebarView((params.pagemode === 'bookmarks' ?
                                   'outline' : params.pagemode), true);
         } else if (params.pagemode === 'none' && this.sidebarOpen) {
@@ -1166,11 +1146,9 @@ var PDFViewerApplication = {
     }
     var thumbsView = document.getElementById('thumbnailView');
     var outlineView = document.getElementById('outlineView');
-    var attachmentsView = document.getElementById('attachmentsView');
 
     var thumbsButton = document.getElementById('viewThumbnail');
     var outlineButton = document.getElementById('viewOutline');
-    var attachmentsButton = document.getElementById('viewAttachments');
 
     switch (view) {
       case 'thumbs':
@@ -1178,10 +1156,8 @@ var PDFViewerApplication = {
 
         thumbsButton.classList.add('toggled');
         outlineButton.classList.remove('toggled');
-        attachmentsButton.classList.remove('toggled');
         thumbsView.classList.remove('hidden');
         outlineView.classList.add('hidden');
-        attachmentsView.classList.add('hidden');
 
         this.forceRendering();
 
@@ -1193,28 +1169,14 @@ var PDFViewerApplication = {
       case 'outline':
         thumbsButton.classList.remove('toggled');
         outlineButton.classList.add('toggled');
-        attachmentsButton.classList.remove('toggled');
         thumbsView.classList.add('hidden');
         outlineView.classList.remove('hidden');
-        attachmentsView.classList.add('hidden');
 
         if (outlineButton.getAttribute('disabled')) {
           return;
         }
         break;
 
-      case 'attachments':
-        thumbsButton.classList.remove('toggled');
-        outlineButton.classList.remove('toggled');
-        attachmentsButton.classList.add('toggled');
-        thumbsView.classList.add('hidden');
-        outlineView.classList.add('hidden');
-        attachmentsView.classList.remove('hidden');
-
-        if (attachmentsButton.getAttribute('disabled')) {
-          return;
-        }
-        break;
     }
   },
 
@@ -1549,11 +1511,6 @@ function webViewerInitialized() {
   document.getElementById('viewOutline').addEventListener('click',
     function() {
       PDFViewerApplication.switchSidebarView('outline');
-    });
-
-  document.getElementById('viewAttachments').addEventListener('click',
-    function() {
-      PDFViewerApplication.switchSidebarView('attachments');
     });
 
   document.getElementById('previous').addEventListener('click',
