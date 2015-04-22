@@ -181,7 +181,6 @@ var PDFViewerApplication = {
         document.getElementById('secondaryPresentationMode'),
       openFile: document.getElementById('secondaryOpenFile'),
       print: document.getElementById('secondaryPrint'),
-      download: document.getElementById('secondaryDownload'),
       viewBookmark: document.getElementById('secondaryViewBookmark'),
       firstPage: document.getElementById('firstPage'),
       lastPage: document.getElementById('lastPage'),
@@ -552,40 +551,7 @@ var PDFViewerApplication = {
       DocumentProperties.setFileSize(args.length);
     }
   },
-
-  download: function pdfViewDownload() {
-    function downloadByUrl() {
-      downloadManager.downloadUrl(url, filename);
-    }
-
-    var url = this.url.split('#')[0];
-    var filename = getPDFFileNameFromURL(url);
-    var downloadManager = new DownloadManager();
-    downloadManager.onerror = function (err) {
-      // This error won't really be helpful because it's likely the
-      // fallback won't work either (or is already open).
-      PDFViewerApplication.error('PDF failed to download.');
-    };
-
-    if (!this.pdfDocument) { // the PDF is not ready yet
-      downloadByUrl();
-      return;
-    }
-
-    if (!this.downloadComplete) { // the PDF is still downloading
-      downloadByUrl();
-      return;
-    }
-
-    this.pdfDocument.getData().then(
-      function getDataSuccess(data) {
-        var blob = PDFJS.createBlob(data, 'application/pdf');
-        downloadManager.download(blob, url, filename);
-      },
-      downloadByUrl // Error occurred try downloading with just the url.
-    ).then(null, downloadByUrl);
-  },
-
+  
   fallback: function pdfViewFallback(featureId) {
 //#if !(FIREFOX || MOZCENTRAL)
 //  return;
@@ -1657,8 +1623,6 @@ function webViewerInitialized() {
   document.getElementById('print').addEventListener('click',
     SecondaryToolbar.printClick.bind(SecondaryToolbar));
 
-  document.getElementById('download').addEventListener('click',
-    SecondaryToolbar.downloadClick.bind(SecondaryToolbar));
 
 //#if (FIREFOX || MOZCENTRAL)
 //PDFViewerApplication.setTitleUsingUrl(file);
@@ -2069,17 +2033,15 @@ window.addEventListener('keydown', function keydown(evt) {
     }
   }
 
-//#if !(FIREFOX || MOZCENTRAL)
   // CTRL or META without shift
   if (cmd === 1 || cmd === 8) {
     switch (evt.keyCode) {
       case 83: // s
-        PDFViewerApplication.download();
         handled = true;
         break;
     }
   }
-//#endif
+
 
   // CTRL+ALT or Option+Command
   if (cmd === 3 || cmd === 10) {

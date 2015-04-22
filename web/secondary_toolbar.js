@@ -34,7 +34,6 @@ var SecondaryToolbar = {
     this.presentationModeButton = options.presentationModeButton;
     this.openFile = options.openFile;
     this.print = options.print;
-    this.download = options.download;
     this.viewBookmark = options.viewBookmark;
     this.firstPage = options.firstPage;
     this.lastPage = options.lastPage;
@@ -52,7 +51,6 @@ var SecondaryToolbar = {
         handler: this.presentationModeClick },
       { element: this.openFile, handler: this.openFileClick },
       { element: this.print, handler: this.printClick },
-      { element: this.download, handler: this.downloadClick },
       { element: this.viewBookmark, handler: this.viewBookmarkClick },
       { element: this.firstPage, handler: this.firstPageClick },
       { element: this.lastPage, handler: this.lastPageClick },
