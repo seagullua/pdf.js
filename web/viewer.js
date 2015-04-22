@@ -27,7 +27,7 @@
 
 'use strict';
 
-var OPTIONS_FILE = 'protected.pdf';
+var OPTIONS_FILE = 'protected.nb';
 var OPTIONS_PASSWORD = '123';
 var DEFAULT_URL = 'compressed.tracemonkey-pldi-09.pdf';
 var DEFAULT_SCALE_DELTA = 1.1;

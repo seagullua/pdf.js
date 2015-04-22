@@ -136,7 +136,7 @@ target.generic = function() {
       ['LICENSE', GENERIC_DIR],
       ['external/webL10n/l10n.js', GENERIC_DIR + '/web'],
       ['web/compatibility.js', GENERIC_DIR + '/web'],
-      ['web/protected.pdf', GENERIC_DIR + '/web'],
+      ['web/protected.nb', GENERIC_DIR + '/web'],
       ['external/bcmaps/*', GENERIC_DIR + '/web/cmaps/'],
       ['web/locale', GENERIC_DIR + '/web']
     ],
