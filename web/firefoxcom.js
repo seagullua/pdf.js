@@ -75,50 +75,6 @@ var FirefoxCom = (function FirefoxComClosure() {
   };
 })();
 
-var DownloadManager = (function DownloadManagerClosure() {
-  function DownloadManager() {}
-
-  DownloadManager.prototype = {
-    downloadUrl: function DownloadManager_downloadUrl(url, filename) {
-      FirefoxCom.request('download', {
-        originalUrl: url,
-        filename: filename
-      });
-    },
-
-    downloadData: function DownloadManager_downloadData(data, filename,
-                                                        contentType) {
-      var blobUrl = PDFJS.createObjectURL(data, contentType);
-
-      FirefoxCom.request('download', {
-        blobUrl: blobUrl,
-        originalUrl: blobUrl,
-        filename: filename,
-        isAttachment: true
-      });
-    },
-
-    download: function DownloadManager_download(blob, url, filename) {
-      var blobUrl = window.URL.createObjectURL(blob);
-
-      FirefoxCom.request('download', {
-        blobUrl: blobUrl,
-        originalUrl: url,
-        filename: filename
-      },
-        function response(err) {
-          if (err && this.onerror) {
-            this.onerror(err);
-          }
-          window.URL.revokeObjectURL(blobUrl);
-        }.bind(this)
-      );
-    }
-  };
-
-  return DownloadManager;
-})();
-
 Preferences._writeToStorage = function (prefObj) {
   return new Promise(function (resolve) {
     FirefoxCom.request('setPreferences', prefObj, resolve);

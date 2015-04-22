@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 /* globals PDFJS, PDFBug, FirefoxCom, Stats, Cache, ProgressBar,
-           DownloadManager, getFileName, scrollIntoView, getPDFFileNameFromURL,
+           getFileName, scrollIntoView, getPDFFileNameFromURL,
            PDFHistory, Preferences, SidebarView, ViewHistory, Stats,
            PDFThumbnailViewer, URL, noContextMenuHandler, SecondaryToolbar,
-           PasswordPrompt, PresentationMode, HandTool, Promise,
-           DocumentProperties, PDFOutlineView, PDFAttachmentView,
+           PresentationMode, HandTool, Promise,
+           DocumentProperties, PDFOutlineView,
            OverlayManager, PDFFindController, PDFFindBar, getVisibleElements,
            watchScroll, PDFViewer, PDFRenderingQueue, PresentationModeState,
            RenderingStates, DEFAULT_SCALE, UNKNOWN_SCALE,
@@ -62,15 +62,6 @@ var mozL10n = document.mozL10n || document.webL10n;
 
 //#if !(FIREFOX || MOZCENTRAL || B2G)
 //#include mozPrintCallback_polyfill.js
-//#endif
-
-//#if GENERIC || CHROME
-//#include download_manager.js
-//#endif
-//#if B2G
-//var DownloadManager = (function DownloadManagerClosure() {
-//  return function DownloadManager() {};
-//})();
 //#endif
 
 //#if FIREFOX || MOZCENTRAL
