@@ -136,11 +136,11 @@ select {
 }
 html[dir='ltr'] .outerCenter {
   float: right;
-  right: 50%;
+  right: 120px;
 }
 html[dir='rtl'] .outerCenter {
   float: left;
-  left: 50%;
+  left: 120px;
 }
 .innerCenter {
   pointer-events: auto;
@@ -148,11 +148,11 @@ html[dir='rtl'] .outerCenter {
 }
 html[dir='ltr'] .innerCenter {
   float: right;
-  right: -50%;
+  /*right: -50%;*/
 }
 html[dir='rtl'] .innerCenter {
   float: left;
-  left: -50%;
+  /*left: -50%;*/
 }
 
 #outerContainer {
@@ -288,9 +288,9 @@ html[dir='rtl'] #toolbarSidebar {
 #toolbarContainer, .findbar, .secondaryToolbar {
   position: relative;
   height: 32px;
-  background-color: #474747; /* fallback */
+  background-color: #ff5a00; /* fallback */
   background-image: url(images/texture.png),
-                    linear-gradient(hsla(0,0%,32%,.99), hsla(0,0%,27%,.95));
+                    linear-gradient(hsla(0,0%,32%,.3), hsla(0,0%,27%,.1));
 }
 html[dir='ltr'] #toolbarContainer, .findbar, .secondaryToolbar {
   box-shadow: inset 1px 0 0 hsla(0,0%,100%,.08),
@@ -1476,6 +1476,17 @@ html[dir='rtl'] .attachmentsItem > button {
   display: none;
 }
 
+.logo {
+  position: absolute;
+  width: 124px;
+  height: 32px;
+  background: url('images/logo.png');
+  background-size: 124px 32px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
 @media screen and (min-resolution: 2dppx) {
   /* Rules for Retina screens */
   .toolbarButton::before {
@@ -1636,16 +1647,16 @@ html[dir='rtl'] .attachmentsItem > button {
 }
 
 @media all and (max-width: 960px) {
-  html[dir='ltr'] #outerContainer.sidebarMoving .outerCenter,
-  html[dir='ltr'] #outerContainer.sidebarOpen .outerCenter {
-    float: left;
-    left: 205px;
-  }
-  html[dir='rtl'] #outerContainer.sidebarMoving .outerCenter,
-  html[dir='rtl'] #outerContainer.sidebarOpen .outerCenter {
-    float: right;
-    right: 205px;
-  }
+  /*html[dir='ltr'] #outerContainer.sidebarMoving .outerCenter,*/
+  /*html[dir='ltr'] #outerContainer.sidebarOpen .outerCenter {*/
+    /*float: left;*/
+    /*left: 0px;*/
+  /*}*/
+  /*html[dir='rtl'] #outerContainer.sidebarMoving .outerCenter,*/
+  /*html[dir='rtl'] #outerContainer.sidebarOpen .outerCenter {*/
+    /*float: right;*/
+    /*right: 0px;*/
+  /*}*/
 }
 
 @media all and (max-width: 900px) {
@@ -1686,14 +1697,14 @@ html[dir='rtl'] .attachmentsItem > button {
     right: 0px;
   }
 
-  html[dir='ltr'] .outerCenter {
-    float: left;
-    left: 205px;
-  }
-  html[dir='rtl'] .outerCenter {
-    float: right;
-    right: 205px;
-  }
+  /*html[dir='ltr'] .outerCenter {*/
+    /*float: left;*/
+    /*left: 0px;*/
+  /*}*/
+  /*html[dir='rtl'] .outerCenter {*/
+    /*float: right;*/
+    /*right: 0px;*/
+  /*}*/
 
   #outerContainer .hiddenLargeView,
   #outerContainer .hiddenMediumView {
@@ -1714,6 +1725,13 @@ html[dir='rtl'] .attachmentsItem > button {
   }
 }
 
+@media all and (max-width: 780px) {
+  #scaleSelectContainer {
+    display: none;
+  }
+}
+
+
 @media all and (max-width: 660px) {
   #outerContainer .hiddenMediumView {
     display: none;
@@ -1723,30 +1741,44 @@ html[dir='rtl'] .attachmentsItem > button {
   }
 }
 
-@media all and (max-width: 600px) {
+@media all and (max-width: 680px) {
   .hiddenSmallView {
     display: none;
   }
   .visibleSmallView {
     display: inherit;
   }
-  html[dir='ltr'] #outerContainer.sidebarMoving .outerCenter,
-  html[dir='ltr'] #outerContainer.sidebarOpen .outerCenter,
+
   html[dir='ltr'] .outerCenter {
-    left: 156px;
+    float: right;
+    right: 40px;
   }
-  html[dir='rtl'] #outerContainer.sidebarMoving .outerCenter,
-  html[dir='rtl'] #outerContainer.sidebarOpen .outerCenter,
   html[dir='rtl'] .outerCenter {
-    right: 156px;
+    float: left;
+    left: 40px;
   }
+
+  /*html[dir='ltr'] #outerContainer.sidebarMoving .outerCenter,*/
+  /*html[dir='ltr'] #outerContainer.sidebarOpen .outerCenter,*/
+  /*html[dir='ltr'] .outerCenter {*/
+    /*left: 0px;*/
+  /*}*/
+  /*html[dir='rtl'] #outerContainer.sidebarMoving .outerCenter,*/
+  /*html[dir='rtl'] #outerContainer.sidebarOpen .outerCenter,*/
+  /*html[dir='rtl'] .outerCenter {*/
+    /*right: 0px;*/
+  /*}*/
   .toolbarButtonSpacer {
     width: 0;
   }
 }
 
-@media all and (max-width: 510px) {
+@media all and (max-width: 550px) {
   #scaleSelectContainer, #pageNumberLabel {
     display: none;
+  }
+  .logo {
+    transform: scale(0.5);
+    margin-right: 80px;
   }
 }

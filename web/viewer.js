@@ -384,14 +384,14 @@ var PDFViewerApplication = {
 //#endif
 
   setTitleUsingUrl: function pdfViewSetTitleUsingUrl(url) {
-    this.url = url;
-    try {
-      this.setTitle(decodeURIComponent(getFileName(url)) || url);
-    } catch (e) {
-      // decodeURIComponent may throw URIError,
-      // fall back to using the unprocessed url in that case
-      this.setTitle(url);
-    }
+    //this.url = url;
+    //try {
+    //  this.setTitle(decodeURIComponent(getFileName(url)) || url);
+    //} catch (e) {
+    //  // decodeURIComponent may throw URIError,
+    //  // fall back to using the unprocessed url in that case
+    //  this.setTitle(url);
+    //}
   },
 
   setTitle: function pdfViewSetTitle(title) {
