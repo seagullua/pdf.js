@@ -179,7 +179,6 @@ var PDFViewerApplication = {
       toggleButton: document.getElementById('secondaryToolbarToggle'),
       presentationModeButton:
         document.getElementById('secondaryPresentationMode'),
-      openFile: document.getElementById('secondaryOpenFile'),
       print: document.getElementById('secondaryPrint'),
       viewBookmark: document.getElementById('secondaryViewBookmark'),
       firstPage: document.getElementById('firstPage'),
@@ -551,7 +550,7 @@ var PDFViewerApplication = {
       DocumentProperties.setFileSize(args.length);
     }
   },
-  
+
   fallback: function pdfViewFallback(featureId) {
 //#if !(FIREFOX || MOZCENTRAL)
 //  return;
@@ -1408,25 +1407,6 @@ function webViewerInitialized() {
 //var file = DEFAULT_URL;
 //#endif
 
-//#if !(FIREFOX || MOZCENTRAL || CHROME || B2G)
-  var fileInput = document.createElement('input');
-  fileInput.id = 'fileInput';
-  fileInput.className = 'fileInput';
-  fileInput.setAttribute('type', 'file');
-  fileInput.oncontextmenu = noContextMenuHandler;
-  document.body.appendChild(fileInput);
-
-  if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
-    document.getElementById('openFile').setAttribute('hidden', 'true');
-    document.getElementById('secondaryOpenFile').setAttribute('hidden', 'true');
-  } else {
-    document.getElementById('fileInput').value = null;
-  }
-//#else
-//document.getElementById('openFile').setAttribute('hidden', 'true');
-//document.getElementById('secondaryOpenFile').setAttribute('hidden', 'true');
-//#endif
-
 //#if !(FIREFOX || MOZCENTRAL)
   var locale = PDFJS.locale || navigator.language;
 //#endif
@@ -1616,10 +1596,6 @@ function webViewerInitialized() {
 
   document.getElementById('presentationMode').addEventListener('click',
     SecondaryToolbar.presentationModeClick.bind(SecondaryToolbar));
-
-  document.getElementById('openFile').addEventListener('click',
-    SecondaryToolbar.openFileClick.bind(SecondaryToolbar));
-
   document.getElementById('print').addEventListener('click',
     SecondaryToolbar.printClick.bind(SecondaryToolbar));
 
