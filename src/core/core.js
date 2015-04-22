@@ -432,7 +432,7 @@ var PDFDocument = (function PDFDocumentClosure() {
     checkHeader: function PDFDocument_checkHeader() {
       var stream = this.stream;
       stream.reset();
-      if (find(stream, '%PDF-', 1024)) {
+      if (find(stream, '%KDF-', 1024)) {
         // Found the header, trim off any garbage before it.
         stream.moveStart();
         // Reading file format version
