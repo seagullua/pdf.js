@@ -984,14 +984,6 @@ html[dir="rtl"] .secondaryToolbarButton > span {
   content: url(images/secondaryToolbarButton-lastPage.png);
 }
 
-.secondaryToolbarButton.rotateCcw::before {
-  content: url(images/secondaryToolbarButton-rotateCcw.png);
-}
-
-.secondaryToolbarButton.rotateCw::before {
-  content: url(images/secondaryToolbarButton-rotateCw.png);
-}
-
 .secondaryToolbarButton.handTool::before {
   content: url(images/secondaryToolbarButton-handTool.png);
 }
@@ -1621,14 +1613,6 @@ html[dir='rtl'] .attachmentsItem > button {
 
   .secondaryToolbarButton.lastPage::before {
     content: url(images/secondaryToolbarButton-lastPage@2x.png);
-  }
-
-  .secondaryToolbarButton.rotateCcw::before {
-    content: url(images/secondaryToolbarButton-rotateCcw@2x.png);
-  }
-
-  .secondaryToolbarButton.rotateCw::before {
-    content: url(images/secondaryToolbarButton-rotateCw@2x.png);
   }
 
   .secondaryToolbarButton.handTool::before {

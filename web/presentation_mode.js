@@ -38,8 +38,6 @@ var PresentationMode = {
 
     this.firstPage = options.firstPage;
     this.lastPage = options.lastPage;
-    this.pageRotateCw = options.pageRotateCw;
-    this.pageRotateCcw = options.pageRotateCcw;
 
     this.firstPage.addEventListener('click', function() {
       this.contextMenuOpen = false;
@@ -50,14 +48,6 @@ var PresentationMode = {
       this.secondaryToolbar.lastPageClick();
     }.bind(this));
 
-    this.pageRotateCw.addEventListener('click', function() {
-      this.contextMenuOpen = false;
-      this.secondaryToolbar.pageRotateCwClick();
-    }.bind(this));
-    this.pageRotateCcw.addEventListener('click', function() {
-      this.contextMenuOpen = false;
-      this.secondaryToolbar.pageRotateCcwClick();
-    }.bind(this));
   },
 
   get isFullscreen() {

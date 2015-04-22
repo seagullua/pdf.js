@@ -166,18 +166,14 @@ var PDFViewerApplication = {
         document.getElementById('secondaryPresentationMode'),
       viewBookmark: document.getElementById('secondaryViewBookmark'),
       firstPage: document.getElementById('firstPage'),
-      lastPage: document.getElementById('lastPage'),
-      pageRotateCw: document.getElementById('pageRotateCw'),
-      pageRotateCcw: document.getElementById('pageRotateCcw')
+      lastPage: document.getElementById('lastPage')
     });
 
     PresentationMode.initialize({
       container: container,
       secondaryToolbar: SecondaryToolbar,
       firstPage: document.getElementById('contextFirstPage'),
-      lastPage: document.getElementById('contextLastPage'),
-      pageRotateCw: document.getElementById('contextPageRotateCw'),
-      pageRotateCcw: document.getElementById('contextPageRotateCcw')
+      lastPage: document.getElementById('contextLastPage')
     });
 
     //PasswordPrompt.initialize({
@@ -1129,16 +1125,6 @@ var PDFViewerApplication = {
     this.updateScaleControls = true;
   },
 
-  rotatePages: function pdfViewRotatePages(delta) {
-    var pageNumber = this.page;
-    this.pageRotation = (this.pageRotation + 360 + delta) % 360;
-    this.pdfViewer.pagesRotation = this.pageRotation;
-    this.pdfThumbnailViewer.pagesRotation = this.pageRotation;
-
-    this.forceRendering();
-
-    this.pdfViewer.scrollPageIntoView(pageNumber);
-  },
 
   /**
    * This function flips the page in presentation mode if the user scrolls up
@@ -1951,9 +1937,6 @@ window.addEventListener('keydown', function keydown(evt) {
           HandTool.toggle();
         }
         break;
-      case 82: // 'r'
-        PDFViewerApplication.rotatePages(90);
-        break;
     }
   }
 
@@ -1968,9 +1951,6 @@ window.addEventListener('keydown', function keydown(evt) {
         handled = true;
         break;
 
-      case 82: // 'r'
-        PDFViewerApplication.rotatePages(-90);
-        break;
     }
   }
 

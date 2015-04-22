@@ -34,8 +34,6 @@ var SecondaryToolbar = {
     this.viewBookmark = options.viewBookmark;
     this.firstPage = options.firstPage;
     this.lastPage = options.lastPage;
-    this.pageRotateCw = options.pageRotateCw;
-    this.pageRotateCcw = options.pageRotateCcw;
 
     // Attach the event listeners.
     var elements = [
@@ -47,9 +45,7 @@ var SecondaryToolbar = {
         handler: this.presentationModeClick },
       { element: this.viewBookmark, handler: this.viewBookmarkClick },
       { element: this.firstPage, handler: this.firstPageClick },
-      { element: this.lastPage, handler: this.lastPageClick },
-      { element: this.pageRotateCw, handler: this.pageRotateCwClick },
-      { element: this.pageRotateCcw, handler: this.pageRotateCcwClick }
+      { element: this.lastPage, handler: this.lastPageClick }
     ];
 
     for (var item in elements) {
@@ -85,14 +81,6 @@ var SecondaryToolbar = {
       PDFViewerApplication.page = PDFViewerApplication.pagesCount;
     }
     this.close();
-  },
-
-  pageRotateCwClick: function secondaryToolbarPageRotateCwClick(evt) {
-    PDFViewerApplication.rotatePages(90);
-  },
-
-  pageRotateCcwClick: function secondaryToolbarPageRotateCcwClick(evt) {
-    PDFViewerApplication.rotatePages(-90);
   },
 
   // Misc. functions for interacting with the toolbar.
