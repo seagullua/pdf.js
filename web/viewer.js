@@ -27,6 +27,8 @@
 
 'use strict';
 
+var OPTIONS_FILE = 'protected.pdf';
+var OPTIONS_PASSWORD = '123';
 var DEFAULT_URL = 'compressed.tracemonkey-pldi-09.pdf';
 var DEFAULT_SCALE_DELTA = 1.1;
 var MIN_SCALE = 0.25;
@@ -501,9 +503,10 @@ var PDFViewerApplication = {
     self.downloadComplete = false;
 
     var passwordNeeded = function passwordNeeded(updatePassword, reason) {
-      PasswordPrompt.updatePassword = updatePassword;
-      PasswordPrompt.reason = reason;
-      PasswordPrompt.open();
+      updatePassword(OPTIONS_PASSWORD);
+      //PasswordPrompt.updatePassword = updatePassword;
+      //PasswordPrompt.reason = reason;
+      //PasswordPrompt.open();
     };
 
     function getDocumentProgress(progressData) {
@@ -1429,9 +1432,9 @@ function webViewerLoad(evt) {
 
 function webViewerInitialized() {
 //#if (GENERIC || B2G)
-  var queryString = document.location.search.substring(1);
-  var params = PDFViewerApplication.parseQueryString(queryString);
-  var file = 'file' in params ? params.file : DEFAULT_URL;
+  //var queryString = document.location.search.substring(1);
+  //var params = PDFViewerApplication.parseQueryString(queryString);
+  var file = OPTIONS_FILE;
 //#endif
 //#if (FIREFOX || MOZCENTRAL)
 //var file = window.location.href.split('#')[0];
