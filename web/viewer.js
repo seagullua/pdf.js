@@ -89,7 +89,6 @@ var mozL10n = document.mozL10n || document.webL10n;
 //#include presentation_mode.js
 //#include hand_tool.js
 //#include overlay_manager.js
-//#include password_prompt.js
 //#include document_properties.js
 //#include pdf_viewer.js
 //#include pdf_thumbnail_viewer.js
@@ -201,13 +200,13 @@ var PDFViewerApplication = {
       pageRotateCcw: document.getElementById('contextPageRotateCcw')
     });
 
-    PasswordPrompt.initialize({
-      overlayName: 'passwordOverlay',
-      passwordField: document.getElementById('password'),
-      passwordText: document.getElementById('passwordText'),
-      passwordSubmit: document.getElementById('passwordSubmit'),
-      passwordCancel: document.getElementById('passwordCancel')
-    });
+    //PasswordPrompt.initialize({
+    //  overlayName: 'passwordOverlay',
+    //  passwordField: document.getElementById('password'),
+    //  passwordText: document.getElementById('passwordText'),
+    //  passwordSubmit: document.getElementById('passwordSubmit'),
+    //  passwordCancel: document.getElementById('passwordCancel')
+    //});
 
     DocumentProperties.initialize({
       overlayName: 'documentPropertiesOverlay',
