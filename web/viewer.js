@@ -19,7 +19,7 @@
            PDFHistory, Preferences, SidebarView, ViewHistory, Stats,
            PDFThumbnailViewer, URL, noContextMenuHandler, SecondaryToolbar,
            PresentationMode, HandTool, Promise,
-           DocumentProperties, PDFOutlineView,
+           PDFOutlineView,
            OverlayManager, PDFFindController, PDFFindBar, getVisibleElements,
            watchScroll, PDFViewer, PDFRenderingQueue, PresentationModeState,
            RenderingStates, DEFAULT_SCALE, UNKNOWN_SCALE,
@@ -76,7 +76,6 @@ var mozL10n = document.mozL10n || document.webL10n;
 //#include presentation_mode.js
 //#include hand_tool.js
 //#include overlay_manager.js
-//#include document_properties.js
 //#include pdf_viewer.js
 //#include pdf_thumbnail_viewer.js
 //#include pdf_outline_view.js
@@ -169,9 +168,7 @@ var PDFViewerApplication = {
       firstPage: document.getElementById('firstPage'),
       lastPage: document.getElementById('lastPage'),
       pageRotateCw: document.getElementById('pageRotateCw'),
-      pageRotateCcw: document.getElementById('pageRotateCcw'),
-      documentProperties: DocumentProperties,
-      documentPropertiesButton: document.getElementById('documentProperties')
+      pageRotateCcw: document.getElementById('pageRotateCcw')
     });
 
     PresentationMode.initialize({
@@ -190,23 +187,6 @@ var PDFViewerApplication = {
     //  passwordSubmit: document.getElementById('passwordSubmit'),
     //  passwordCancel: document.getElementById('passwordCancel')
     //});
-
-    DocumentProperties.initialize({
-      overlayName: 'documentPropertiesOverlay',
-      closeButton: document.getElementById('documentPropertiesClose'),
-      fileNameField: document.getElementById('fileNameField'),
-      fileSizeField: document.getElementById('fileSizeField'),
-      titleField: document.getElementById('titleField'),
-      authorField: document.getElementById('authorField'),
-      subjectField: document.getElementById('subjectField'),
-      keywordsField: document.getElementById('keywordsField'),
-      creationDateField: document.getElementById('creationDateField'),
-      modificationDateField: document.getElementById('modificationDateField'),
-      creatorField: document.getElementById('creatorField'),
-      producerField: document.getElementById('producerField'),
-      versionField: document.getElementById('versionField'),
-      pageCountField: document.getElementById('pageCountField')
-    });
 
     var self = this;
     var initializedPromise = Promise.all([
@@ -380,10 +360,6 @@ var PDFViewerApplication = {
 
           PDFViewerApplication.open(args.pdfUrl, 0, undefined,
                                     pdfDataRangeTransport);
-
-          if (args.length) {
-            DocumentProperties.setFileSize(args.length);
-          }
           break;
         case 'range':
           pdfDataRangeTransport.onDataRange(args.begin, args.chunk);
@@ -528,9 +504,6 @@ var PDFViewerApplication = {
       }
     );
 
-    if (args && args.length) {
-      DocumentProperties.setFileSize(args.length);
-    }
   },
 
   fallback: function pdfViewFallback(featureId) {
@@ -792,10 +765,6 @@ var PDFViewerApplication = {
     this.findController.reset();
 
     this.pdfDocument = pdfDocument;
-
-    DocumentProperties.url = this.url;
-    DocumentProperties.pdfDocument = pdfDocument;
-    DocumentProperties.resolveDataAvailable();
 
     var downloadedPromise = pdfDocument.getDownloadInfo().then(function() {
       self.downloadComplete = true;

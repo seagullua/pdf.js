@@ -996,9 +996,6 @@ html[dir="rtl"] .secondaryToolbarButton > span {
   content: url(images/secondaryToolbarButton-handTool.png);
 }
 
-.secondaryToolbarButton.documentProperties::before {
-  content: url(images/secondaryToolbarButton-documentProperties.png);
-}
 
 .verticalToolbarSeparator {
   display: block;
@@ -1380,30 +1377,6 @@ html[dir='rtl'] .attachmentsItem > button {
   width: 200px;
 }
 
-#documentPropertiesOverlay > .dialog {
-  text-align: left;
-}
-#documentPropertiesOverlay .row > * {
-  min-width: 100px;
-}
-html[dir='ltr'] #documentPropertiesOverlay .row > * {
-  text-align: left;
-}
-html[dir='rtl'] #documentPropertiesOverlay .row > * {
-  text-align: right;
-}
-#documentPropertiesOverlay .row > span {
-  width: 125px;
-  word-wrap: break-word;
-}
-#documentPropertiesOverlay .row > p {
-  max-width: 225px;
-  word-wrap: break-word;
-}
-#documentPropertiesOverlay .buttonRow {
-  margin-top: 10px;
-}
-
 .clearBoth {
   clear: both;
 }
@@ -1662,9 +1635,6 @@ html[dir='rtl'] #documentPropertiesOverlay .row > * {
     content: url(images/secondaryToolbarButton-handTool@2x.png);
   }
 
-  .secondaryToolbarButton.documentProperties::before {
-    content: url(images/secondaryToolbarButton-documentProperties@2x.png);
-  }
 }
 
 @media print {
