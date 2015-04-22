@@ -60,10 +60,6 @@ var mozL10n = document.mozL10n || document.webL10n;
 //#include ui_utils.js
 //#include preferences.js
 
-//#if !(FIREFOX || MOZCENTRAL || B2G)
-//#include mozPrintCallback_polyfill.js
-//#endif
-
 //#if FIREFOX || MOZCENTRAL
 //#include firefoxcom.js
 //#endif
@@ -169,7 +165,6 @@ var PDFViewerApplication = {
       toggleButton: document.getElementById('secondaryToolbarToggle'),
       presentationModeButton:
         document.getElementById('secondaryPresentationMode'),
-      print: document.getElementById('secondaryPrint'),
       viewBookmark: document.getElementById('secondaryViewBookmark'),
       firstPage: document.getElementById('firstPage'),
       lastPage: document.getElementById('lastPage'),
@@ -299,10 +294,7 @@ var PDFViewerApplication = {
   },
 
   get supportsPrinting() {
-    var canvas = document.createElement('canvas');
-    var value = 'mozPrintCallback' in canvas;
-
-    return PDFJS.shadow(this, 'supportsPrinting', value);
+    return false;
   },
 
   get supportsFullscreen() {
@@ -880,28 +872,6 @@ var PDFViewerApplication = {
       });
     });
 
-    pagesPromise.then(function() {
-      if (self.supportsPrinting) {
-        pdfDocument.getJavaScript().then(function(javaScript) {
-          if (javaScript.length) {
-            console.warn('Warning: JavaScript is not supported');
-            self.fallback(PDFJS.UNSUPPORTED_FEATURES.javaScript);
-          }
-          // Hack to support auto printing.
-          var regex = /\bprint\s*\(/g;
-          for (var i = 0, ii = javaScript.length; i < ii; i++) {
-            var js = javaScript[i];
-            if (js && regex.test(js)) {
-              setTimeout(function() {
-                window.print();
-              });
-              return;
-            }
-          }
-        });
-      }
-    });
-
     // outline depends on pagesRefMap
     var promises = [pagesPromise, this.animationStartedPromise];
     Promise.all(promises).then(function() {
@@ -1184,59 +1154,6 @@ var PDFViewerApplication = {
     return params;
   },
 
-  beforePrint: function pdfViewSetupBeforePrint() {
-    if (!this.supportsPrinting) {
-      var printMessage = mozL10n.get('printing_not_supported', null,
-          'Warning: Printing is not fully supported by this browser.');
-      this.error(printMessage);
-      return;
-    }
-
-    var alertNotReady = false;
-    var i, ii;
-    if (!this.pagesCount) {
-      alertNotReady = true;
-    } else {
-      for (i = 0, ii = this.pagesCount; i < ii; ++i) {
-        if (!this.pdfViewer.getPageView(i).pdfPage) {
-          alertNotReady = true;
-          break;
-        }
-      }
-    }
-    if (alertNotReady) {
-      var notReadyMessage = mozL10n.get('printing_not_ready', null,
-          'Warning: The PDF is not fully loaded for printing.');
-      window.alert(notReadyMessage);
-      return;
-    }
-
-    this.printing = true;
-    this.forceRendering();
-
-    var body = document.querySelector('body');
-    body.setAttribute('data-mozPrintCallback', true);
-    for (i = 0, ii = this.pagesCount; i < ii; ++i) {
-      this.pdfViewer.getPageView(i).beforePrint();
-    }
-
-//#if (FIREFOX || MOZCENTRAL)
-//    FirefoxCom.request('reportTelemetry', JSON.stringify({
-//      type: 'print'
-//    }));
-//#endif
-  },
-
-  afterPrint: function pdfViewSetupAfterPrint() {
-    var div = document.getElementById('printContainer');
-    while (div.hasChildNodes()) {
-      div.removeChild(div.lastChild);
-    }
-
-    this.printing = false;
-    this.forceRendering();
-  },
-
   setScale: function (value, resetAutoSettings) {
     this.updateScaleControls = !!resetAutoSettings;
     this.pdfViewer.currentScaleValue = value;
@@ -1448,11 +1365,6 @@ function webViewerInitialized() {
 //}
 //#endif
 
-  if (!PDFViewerApplication.supportsPrinting) {
-    document.getElementById('print').classList.add('hidden');
-    document.getElementById('secondaryPrint').classList.add('hidden');
-  }
-
   if (!PDFViewerApplication.supportsFullscreen) {
     document.getElementById('presentationMode').classList.add('hidden');
     document.getElementById('secondaryPresentationMode').
@@ -1544,8 +1456,6 @@ function webViewerInitialized() {
 
   document.getElementById('presentationMode').addEventListener('click',
     SecondaryToolbar.presentationModeClick.bind(SecondaryToolbar));
-  document.getElementById('print').addEventListener('click',
-    SecondaryToolbar.printClick.bind(SecondaryToolbar));
 
 
 //#if (FIREFOX || MOZCENTRAL)
@@ -2142,13 +2052,6 @@ window.addEventListener('keydown', function keydown(evt) {
   }
 });
 
-window.addEventListener('beforeprint', function beforePrint(evt) {
-  PDFViewerApplication.beforePrint();
-});
-
-window.addEventListener('afterprint', function afterPrint(evt) {
-  PDFViewerApplication.afterPrint();
-});
 
 (function animationStartedClosure() {
   // The offsetParent is not set until the pdf.js iframe or object is visible.
