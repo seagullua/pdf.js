@@ -27,9 +27,8 @@
 
 'use strict';
 
-var OPTIONS_FILE = 'protected.nb';
-var OPTIONS_PASSWORD = '123';
-var DEFAULT_URL = 'compressed.tracemonkey-pldi-09.pdf';
+var OPTIONS_FILE = '';
+var OPTIONS_PASSWORD = '';
 var DEFAULT_SCALE_DELTA = 1.1;
 var MIN_SCALE = 0.25;
 var MAX_SCALE = 10.0;
@@ -54,6 +53,20 @@ PDFJS.cMapPacked = true;
 //PDFJS.cMapUrl = '../web/cmaps/';
 //PDFJS.cMapPacked = true;
 //#endif
+
+function initParameters() {
+  var data_tag = document.getElementById("reader-conf");
+  if(data_tag) {
+    var data = data_tag.getAttribute("data-params");
+    var params = JSON.parse(data);
+    PDFJS.cMapUrl = params.cMapUrl;
+    PDFJS.imageResourcesPath = params.imageResourcesPath;
+    PDFJS.workerSrc = params.workerSrc;
+    OPTIONS_FILE = params.file;
+    OPTIONS_PASSWORD = params.password;
+    //alert(data);
+  }
+}
 
 var mozL10n = document.mozL10n || document.webL10n;
 
@@ -1216,6 +1229,7 @@ window.PDFView = PDFViewerApplication; // obsolete name, using it as an alias
 //#endif
 
 function webViewerLoad(evt) {
+  initParameters();
   PDFViewerApplication.initialize().then(webViewerInitialized);
 }
 
